@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <p>{{ message }}</p>
-    <p>{{ getName() }}</p>
+    <p>hii</p>
+    <v-text-field label="regular"></v-text-field>
   </div>
 </template>
 

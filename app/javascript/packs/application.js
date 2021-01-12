@@ -13,7 +13,10 @@
 // ActiveStorage.start()
 
 import Vue from 'vue'
+import vuetify from '../utils/vuetify.js' // path to vuetify export
 import App from '../app.vue'
+
+Vue.use(vuetify)
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
