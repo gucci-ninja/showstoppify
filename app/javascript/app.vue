@@ -3,16 +3,28 @@
     <v-app id="inspire">
     <Header/>
       <div class="search">
-        <v-form>
+        <v-form
+          ref="form"
+          @submit.prevent="searchMovies"
+        >
           <v-text-field
+            v-model="movieQuery"
             class="mt-5"
             label="Search for a movie and nominate your favourites!"
             outlined
             prepend-inner-icon="mdi-magnify"
+
           ></v-text-field>
         </v-form>
       </div>
-      <Movie/>
+      <v-container fluid>
+        <v-row dense>
+          <v-col md="3" class="pa-3 d-flex flex-column" v-for="movie in movies" :key="movie" :movie="movie" >
+            <Movie :movie="movie"/>
+          </v-col>
+          <!-- <Movie :movie="sampleMovie"/> -->
+        </v-row>
+      </v-container>
     </v-app>
   </div>
 
@@ -33,13 +45,12 @@ export default {
     return {
       message: "SHoopie!",
       name: '',
+      movieQuery: '',
+      movies: {},
+      sampleMovie: { Title: 'Some Title that is really long liek super ong', Poster: 'poster', Year: '2021'}
     }
   },
   mounted: () => {
-    console.log(process.env.OMDB_API_KEY);
-    omdb.get('/', { params: {i: 'tt3896198', apikey: process.env.OMDB_API_KEY }}).then((res) => {
-      console.log(res.data);
-    })
     
     // const vm = this;
 
@@ -52,7 +63,7 @@ export default {
     //   });
   },
   methods: {
-    getName: function() {
+    getName() {
 
       axios.get('/landing/test')
         .then((xhr) => {
@@ -60,6 +71,17 @@ export default {
 
         });
         return this.name;
+    },
+    searchMovies() {
+      omdb.get('/', { 
+        params: {
+          s: this.movieQuery,
+          type: 'movie',
+          apikey: process.env.OMDB_API_KEY
+        }
+      }).then((res) => {
+        this.movies = res.data.Search;
+    })
     }
   },
 }
