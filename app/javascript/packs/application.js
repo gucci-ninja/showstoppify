@@ -13,14 +13,13 @@
 // ActiveStorage.start()
 
 import Vue from 'vue'
-import vuetify from '../utils/vuetify.js' // path to vuetify export
+import vuetify from '../utils/vuetify.js'
 import App from '../app.vue'
-
-Vue.use(vuetify)
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
-    render: h => h(App)
+    render: h => h(App),
+    vuetify: vuetify
   }).$mount()
   document.body.appendChild(app.$el)
 

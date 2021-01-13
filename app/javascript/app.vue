@@ -1,14 +1,34 @@
 <template>
   <div id="app">
-    <p>hii</p>
-    <v-text-field label="regular"></v-text-field>
+    <v-app id="inspire">
+    <Header/>
+      <div class="search">
+        <v-form>
+          <v-text-field
+            class="mt-5"
+            label="Search for a movie and nominate your favourites!"
+            outlined
+            prepend-inner-icon="mdi-magnify"
+          ></v-text-field>
+        </v-form>
+      </div>
+      <Movie/>
+    </v-app>
   </div>
+
 </template>
 
 <script>
+import Header from 'components/Header'
 import axios from 'utils/apiClient';
+import Movie from 'components/Movie';
+import omdb from 'utils/movieApi';
 
 export default {
+  components: {
+    Movie,
+    Header,
+  },
   data: function () {
     return {
       message: "SHoopie!",
@@ -16,6 +36,11 @@ export default {
     }
   },
   mounted: () => {
+    console.log(process.env.OMDB_API_KEY);
+    omdb.get('/', { params: {i: 'tt3896198', apikey: process.env.OMDB_API_KEY }}).then((res) => {
+      console.log(res.data);
+    })
+    
     // const vm = this;
 
     // axios.get('/landing/test')
@@ -41,8 +66,8 @@ export default {
 </script>
 
 <style scoped>
-p {
-  font-size: 2em;
-  text-align: center;
+
+.search {
+  padding: 5vh;
 }
 </style>
