@@ -27,7 +27,7 @@
       <v-btn
         color="deep-purple lighten-2"
         text
-        @click="reserve"
+        @click="nominate"
       >
         Nominate
       </v-btn>
@@ -43,12 +43,31 @@
 </template>
 
 <script>
+import axios from '../utils/apiClient';
+
 export default {
   name: 'Movie',
   props: {
     movie: {
       type: Object,
       default: () => {},
+    },
+    nomination_list: String
+  },
+  methods: {
+    nominate() {
+      axios.patch('/nomination_lists', { 
+        params: {
+          id: nomination_list,
+          movie: movie
+        }
+      }).then((res) => {
+        console.log(res)
+      })
+      // axios.get('/nomination_lists', { params: { token: '1234' }})
+      //   .then(function(res) {
+      //   console.log(res);
+      // });
     }
   }
 

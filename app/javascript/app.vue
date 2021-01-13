@@ -1,8 +1,8 @@
 <template>
   <div id="app">
+    <Nominations :nominations="nominations" />
     <v-app id="inspire">
-      <Nominations :nominations="nominations" />
-      <v-col cols=9>
+      <v-col cols="9">
         <Header/>
         <div class="search">
           <v-form
@@ -22,7 +22,7 @@
         <v-container fluid>
           <v-row dense>
             <v-col md="3" class="pa-3 d-flex flex-column" v-for="movie in movies" :key="movie" :movie="movie" >
-              <Movie :movie="movie"/>
+              <Movie v-on:nominate="testEmit()" :movie="movie" :nominations="nominations"/>
             </v-col>
             <!-- <Movie :movie="sampleMovie"/> -->
           </v-row>
@@ -53,10 +53,12 @@ export default {
       movieQuery: '',
       movies: {},
       sampleMovie: { Title: 'Some Title that is really long liek super ong', Poster: 'poster', Year: '2021'},
-      nominations: {}
+      nominations: {},
+      token: '1234'
     }
   },
-  mounted: () => {
+  mounted() {
+    this.fetchNominations();
     
     // const vm = this;
 
@@ -88,6 +90,15 @@ export default {
       }).then((res) => {
         this.movies = res.data.Search;
     })
+    },
+    fetchNominations() {
+      axios.post('/nomination_lists', { nomination_list: { token: this.token }})
+      .then(function(res) {
+        console.log(res);
+      });
+    },
+    testEmit() {
+      console.log('event fireddd')
     }
   },
 }
