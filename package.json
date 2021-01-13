@@ -1,6 +1,9 @@
 {
   "name": "the-shoppies",
   "private": true,
+  "scripts": {
+    "lint": "eslint --ext .js,.vue app/javascript/"
+  },
   "dependencies": {
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
@@ -15,9 +18,10 @@
   },
   "version": "0.1.0",
   "devDependencies": {
-    "deepmerge": "^4.2.2",
+    "@mdi/font": "^5.8.55",
+    "eslint": "^7.17.0",
+    "eslint-plugin-vue": "^7.4.1",
     "sass": "^1.32.4",
-    "sass-loader": "^10.1.1",
     "webpack-dev-server": "^3.11.1"
   }
 }
