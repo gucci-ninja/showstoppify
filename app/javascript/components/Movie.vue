@@ -28,13 +28,15 @@
         color="deep-purple lighten-2"
         text
         @click="nominate"
+        :disabled="movie.nominated"
       >
         Nominate
       </v-btn>
       <v-btn
         color="deep-purple lighten-2"
         text
-        @click="reserve"
+        @click="remove()"
+        :disabled="!movie.nominated"
       >
         Cancel Nomination
       </v-btn>
@@ -52,24 +54,44 @@ export default {
       type: Object,
       default: () => {},
     },
-    nomination_list: String
+    nomination_list: {},
   },
+  // data: function () {
+  //   return {
+  //     isNominated: this.movie.nominated,
+  //   }
+  // },
   methods: {
     nominate() {
-      axios.patch('/nomination_lists', { 
-        params: {
-          id: nomination_list,
-          movie: movie
+      axios.post('/movies', { 
+        movie: {
+          nomination_list_id: this.nomination_list.id,
+          title: this.movie.Title,
+          year: this.movie.Year,
+          poster_url: this.movie.Poster,
         }
       }).then((res) => {
-        console.log(res)
+        this.$emit('nominate');
       })
       // axios.get('/nomination_lists', { params: { token: '1234' }})
       //   .then(function(res) {
       //   console.log(res);
       // });
+    },
+    remove() {
+      axios.get('/movies', {
+        params: {
+          nomination_list_id: this.nomination_list.id,
+          title: this.movie.Title
+        }
+      }).then((res) => {
+        axios.delete(`/movies/${res.data.id}`)
+          .then((res) => {
+            this.$emit('remove')
+          });
+      });
     }
-  }
+  },
 
 }
 </script>

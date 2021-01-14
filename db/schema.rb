@@ -10,27 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_13_212001) do
+ActiveRecord::Schema.define(version: 2021_01_14_154208) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "movie_nominations", id: false, force: :cascade do |t|
-    t.bigint "nomination_list_id"
-    t.bigint "movie_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["movie_id"], name: "index_movie_nominations_on_movie_id"
-    t.index ["nomination_list_id"], name: "index_movie_nominations_on_nomination_list_id"
-  end
 
   create_table "movies", force: :cascade do |t|
     t.string "title"
     t.string "year"
     t.string "imdb_id"
     t.string "poster_url"
+    t.bigint "nomination_list_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["nomination_list_id"], name: "index_movies_on_nomination_list_id"
   end
 
   create_table "nomination_lists", force: :cascade do |t|
@@ -39,6 +32,4 @@ ActiveRecord::Schema.define(version: 2021_01_13_212001) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "movie_nominations", "movies"
-  add_foreign_key "movie_nominations", "nomination_lists"
 end

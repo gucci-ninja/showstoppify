@@ -1,5 +1,4 @@
 class Movie < ApplicationRecord
-  has_many :movie_nominations
-  has_many :nominated_lists, through: :movie_nominations
+  belongs_to :nomination_list
   validates_associated :nomination_list
 end

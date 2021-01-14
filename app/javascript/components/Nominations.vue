@@ -11,8 +11,8 @@
 
     <v-divider></v-divider>
     
-    <v-list v-if="nominations.length" dense>
-      <Nomination v-for="movie in nominations" :key="movie" :movie="movie" />
+    <v-list v-if="nominations" dense>
+      <Nomination v-on:remove="$emit('remove')" v-for="movie in nominations" :key="movie.id" :movie="movie" />
     </v-list>
     <v-list v-else dense>
       <v-list-item>Looks like you haven't nominated any movies 😢</v-list-item>
@@ -30,7 +30,7 @@ export default {
   },
   props: {
     nominations: {}
-  }
+  },
 }
 </script>
 

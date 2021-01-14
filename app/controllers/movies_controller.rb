@@ -1,10 +1,15 @@
 class MoviesController < ApplicationController
+  protect_from_forgery with: :null_session
   before_action :set_movie, only: [:show, :edit, :update, :destroy]
 
   # GET /movies
   # GET /movies.json
   def index
-    @movies = Movie.all
+    puts params
+    render json: Movie.find_by(
+      nomination_list_id: params[:nomination_list_id],
+      title: params[:title]
+    )
   end
 
   # GET /movies/1
@@ -29,7 +34,7 @@ class MoviesController < ApplicationController
     respond_to do |format|
       if @movie.save
         format.html { redirect_to @movie, notice: 'Movie was successfully created.' }
-        format.json { render :show, status: :created, location: @movie }
+        format.json { render json: @movie }
       else
         format.html { render :new }
         format.json { render json: @movie.errors, status: :unprocessable_entity }
@@ -69,6 +74,6 @@ class MoviesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def movie_params
-      params.require(:movie).permit(:title, :year, :imdb_id, :poster_url)
+      params.require(:movie).permit(:title, :year, :poster_url, :nomination_list_id)
     end
 end

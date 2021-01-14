@@ -44,11 +44,15 @@ class NominationListsController < ApplicationController
   # PATCH/PUT /nomination_lists/1
   # PATCH/PUT /nomination_lists/1.json
   def update
-    puts @nomination_list
+    # @nomination_list.update(nomination_list_params) if params[:nomination_list]
+    # movies_params.each do |movie_params|
+    #   @nomination_list.movies << Movie.new(movie_params)
+    # end
+
     # respond_to do |format|
-    #   if @nomination_list.update(nomination_list_params)
+    #   if @nomination_list.save
     #     format.html { redirect_to @nomination_list, notice: 'Nomination list was successfully updated.' }
-    #     format.json { render :show, status: :ok, location: @nomination_list }
+    #     format.json { render json: @nomination_list }
     #   else
     #     format.html { render :edit }
     #     format.json { render json: @nomination_list.errors, status: :unprocessable_entity }

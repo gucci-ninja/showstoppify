@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Nominations :nominations="nominations" />
+    <Nominations v-on:remove="updateNominations()" :nominations="nomination_list.movies" />
     <v-app id="inspire">
       <v-col md="9" sm="6">
         <Header/>
@@ -21,10 +21,10 @@
         </div>
         <v-container fluid>
           <v-row dense>
-            <v-col md="3" class="pa-3 d-flex flex-column" v-for="movie in movies" :key="movie" :movie="movie" >
-              <Movie v-on:nominate="testEmit()" :movie="movie" :nominations="nominations"/>
+            <v-col md="3" class="pa-3 d-flex flex-column" v-for="movie in movies" :key="movie.id" :movie="movie" >
+              <Movie v-on:nominate="updateNominations()" v-on:remove="updateNominations()" :movie="movie" :nomination_list="nomination_list"/>
             </v-col>
-            <!-- <Movie :movie="sampleMovie"/> -->
+            <!-- <Movie v-on:nominate="fetchNominations()" :movie="sampleMovie" :nomination_list="nomination_list" /> -->
           </v-row>
         </v-container>
       </v-col>
@@ -53,7 +53,7 @@ export default {
       movieQuery: '',
       movies: {},
       sampleMovie: { Title: 'Some Title that is really long liek super ong', Poster: 'poster', Year: '2021'},
-      nominations: {},
+      nomination_list: {},
       token: '1234'
     }
   },
@@ -88,18 +88,31 @@ export default {
           apikey: process.env.OMDB_API_KEY
         }
       }).then((res) => {
+        // this.movies = res.data.Search;
         this.movies = res.data.Search;
-    })
+        this.movies.forEach((movie) => {
+          movie.nominated = this.nomination_list.movies.some(e => e.title === movie.Title) })
+        });
+    //     .map(movie => { return movie.disabled = this.nomination_list.movies.some(e => e.title === movie.Title) });
+    // })
     },
     fetchNominations() {
       axios.post('/nomination_lists', { nomination_list: { token: this.token }})
-      .then(function(res) {
-        console.log(res);
+      .then((res) => {
+        // console.log(res)
+        this.nomination_list = res.data;
       });
     },
     testEmit() {
       console.log('event fireddd')
-    }
+    },
+    updateNominations() {
+      this.fetchNominations();
+      this.searchMovies();
+      // this.movies.forEach((movie) => {
+      //   movie.nominated = this.nomination_list.movies.some(e => e.title === movie.Title) 
+      // })
+    },
   },
 }
 </script>

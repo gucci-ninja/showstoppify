@@ -1,5 +1,6 @@
 class LandingController < ApplicationController
   def index
+    puts Movie.all.count
   end
 
   def test
