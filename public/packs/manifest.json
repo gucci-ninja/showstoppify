@@ -1,0 +1,29 @@
+{
+  "application.js": "/packs/js/application-aa1262eb300240e8de22.js",
+  "application.js.map": "/packs/js/application-aa1262eb300240e8de22.js.map",
+  "entrypoints": {
+    "application": {
+      "js": [
+        "/packs/js/application-aa1262eb300240e8de22.js"
+      ],
+      "js.map": [
+        "/packs/js/application-aa1262eb300240e8de22.js.map"
+      ]
+    },
+    "hello_vue": {
+      "js": [
+        "/packs/js/hello_vue-4a766831ac5d9d38779c.js"
+      ],
+      "js.map": [
+        "/packs/js/hello_vue-4a766831ac5d9d38779c.js.map"
+      ]
+    }
+  },
+  "hello_vue.js": "/packs/js/hello_vue-4a766831ac5d9d38779c.js",
+  "hello_vue.js.map": "/packs/js/hello_vue-4a766831ac5d9d38779c.js.map",
+  "media/fonts/materialdesignicons-webfont.eot?v=5.8.55": "/packs/media/fonts/materialdesignicons-webfont-52adde0d.eot",
+  "media/fonts/materialdesignicons-webfont.ttf?v=5.8.55": "/packs/media/fonts/materialdesignicons-webfont-506bc821.ttf",
+  "media/fonts/materialdesignicons-webfont.woff2?v=5.8.55": "/packs/media/fonts/materialdesignicons-webfont-6147fc37.woff2",
+  "media/fonts/materialdesignicons-webfont.woff?v=5.8.55": "/packs/media/fonts/materialdesignicons-webfont-d06df622.woff",
+  "media/images/shoppies.png": "/packs/media/images/shoppies-4f189357.png"
+}
