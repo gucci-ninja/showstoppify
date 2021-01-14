@@ -14,14 +14,14 @@
     "vue": "^2.6.12",
     "vue-loader": "^15.9.6",
     "vue-template-compiler": "^2.6.12",
-    "vuetify": "^2.4.2"
-  },
-  "version": "0.1.0",
-  "devDependencies": {
+    "vuetify": "^2.4.2",
     "@mdi/font": "^5.8.55",
     "eslint": "^7.17.0",
     "eslint-plugin-vue": "^7.4.1",
     "sass": "^1.32.4",
     "webpack-dev-server": "^3.11.1"
+  },
+  "version": "0.1.0",
+  "devDependencies": {
   }
 }
