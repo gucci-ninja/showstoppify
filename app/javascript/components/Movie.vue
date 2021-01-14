@@ -56,11 +56,6 @@ export default {
     },
     nomination_list: {},
   },
-  // data: function () {
-  //   return {
-  //     isNominated: this.movie.nominated,
-  //   }
-  // },
   methods: {
     nominate() {
       axios.post('/movies', { 
@@ -73,10 +68,6 @@ export default {
       }).then((res) => {
         this.$emit('nominate');
       })
-      // axios.get('/nomination_lists', { params: { token: '1234' }})
-      //   .then(function(res) {
-      //   console.log(res);
-      // });
     },
     remove() {
       axios.get('/movies', {
