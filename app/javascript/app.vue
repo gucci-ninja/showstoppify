@@ -2,7 +2,7 @@
   <div id="app">
     <Nominations :nominations="nominations" />
     <v-app id="inspire">
-      <v-col cols="9">
+      <v-col md="9" sm="6">
         <Header/>
         <div class="search">
           <v-form
