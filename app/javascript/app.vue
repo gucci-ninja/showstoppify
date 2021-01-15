@@ -60,10 +60,16 @@ export default {
       movies: {},
       sampleMovie: { Title: 'Some Title that is really long liek super ong', Poster: 'poster', Year: '2021'},
       nomination_list: {},
-      token: '1234'
+      token: ''
     }
   },
   mounted() {
+    if (localStorage.token) {
+      this.token = localStorage.token;
+    } else {
+      this.token = require("crypto").randomBytes(32).toString('hex');
+      localStorage.token = this.token;
+    }
     this.fetchNominations();
   },
   methods: {
