@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    {{ message }}
     <Nominations v-on:remove="updateNominations()" :nominations="nomination_list.movies" />
     <v-app id="inspire">
       <v-col md="9" sm="6">
@@ -53,7 +54,7 @@ export default {
   },
   data: function () {
     return {
-      message: "SHoopie!",
+      message: process.env.OMDB_API_KEY,
       name: '',
       movieQuery: '',
       movies: {},
