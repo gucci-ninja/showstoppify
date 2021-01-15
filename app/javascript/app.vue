@@ -3,6 +3,7 @@
     {{ message }}
     <Nominations v-on:remove="updateNominations()" :nominations="nomination_list.movies" />
     <v-app id="inspire">
+      <Banner v-if="limitReached" />
       <v-col md="9" sm="6">
         <Header/>
         <div class="search">
@@ -45,12 +46,14 @@ import axios from 'utils/apiClient';
 import Movie from 'components/Movie';
 import omdb from 'utils/movieApi';
 import Nominations from 'components/Nominations'
+import Banner from 'components/Banner';
 
 export default {
   components: {
     Movie,
     Header,
-    Nominations
+    Nominations,
+    Banner,
   },
   data: function () {
     return {
@@ -66,6 +69,7 @@ export default {
   mounted() {
     if (localStorage.token) {
       this.token = localStorage.token;
+      console.log('hey')
     } else {
       this.token = require("crypto").randomBytes(32).toString('hex');
       localStorage.token = this.token;
@@ -106,6 +110,11 @@ export default {
       this.searchMovies();
     },
   },
+  computed: {
+    limitReached: function() {
+      return this.nomination_list.movies.length == 5;
+    }
+  }
 }
 </script>
 

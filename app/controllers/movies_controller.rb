@@ -31,6 +31,11 @@ class MoviesController < ApplicationController
   def create
     @movie = Movie.new(movie_params)
 
+    if @movie.nomination_list.movies.count == 5
+      render json: 'Limit Reached'
+      return
+    end
+
     respond_to do |format|
       if @movie.save
         format.html { redirect_to @movie, notice: 'Movie was successfully created.' }

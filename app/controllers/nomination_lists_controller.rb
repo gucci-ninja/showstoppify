@@ -29,7 +29,7 @@ class NominationListsController < ApplicationController
   # POST /nomination_lists.json
   def create
     @nomination_list = NominationList.find_or_create_by(nomination_list_params)
-
+    
     respond_to do |format|
       if @nomination_list.save
         format.html { redirect_to @nomination_list, notice: 'Nomination list was successfully created.' }
