@@ -15,6 +15,9 @@
 import Vue from 'vue'
 import vuetify from '../utils/vuetify.js'
 import App from '../app.vue'
+import Clipboard from 'v-clipboard'
+
+Vue.use(Clipboard)
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({

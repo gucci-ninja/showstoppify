@@ -1,10 +1,11 @@
 <template>
   <div id="app">
-    <Nominations v-on:remove="updateNominations()" :nominations="nomination_list.movies" />
     <v-app id="inspire">
+      <Nominations v-on:remove="updateNominations()" :nominations="nomination_list.movies" />
+      <CopyLinkBtn :token="token" />
       <Banner v-if="limitReached" />
       <v-col md="9" sm="6">
-        <Header/>
+        <Header />
         <div class="search">
           <v-form
             ref="form"
@@ -51,7 +52,8 @@ import Movie from 'components/Movie';
 import omdb from 'utils/movieApi';
 import Nominations from 'components/Nominations'
 import Banner from 'components/Banner';
-import Pagination from 'components/Pagination'
+import Pagination from 'components/Pagination';
+import CopyLinkBtn from 'components/CopyLinkBtn';
 
 export default {
   components: {
@@ -60,6 +62,7 @@ export default {
     Nominations,
     Banner,
     Pagination,
+    CopyLinkBtn,
   },
   data: function () {
     return {
@@ -74,6 +77,7 @@ export default {
     }
   },
   created() {
+    console.log(window.location)
     var query = window.location.search.substring(1);
     if (query) {
       var pair = query.split('=')
@@ -123,6 +127,9 @@ export default {
     changePage(page) {
       this.page = page;
       this.searchMovies();
+    },
+    link() {
+      return `${window.location.host}/?list=${this.token}`;
     }
   },
   computed: {

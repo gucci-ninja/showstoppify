@@ -17,6 +17,7 @@
     "eslint-plugin-vue": "^7.4.1",
     "sass": "^1.32.4",
     "turbolinks": "^5.2.0",
+    "v-clipboard": "^2.2.3",
     "vue": "^2.6.12",
     "vue-loader": "^15.9.6",
     "vue-template-compiler": "^2.6.12",
