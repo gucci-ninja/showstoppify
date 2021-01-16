@@ -1,25 +1,39 @@
 <template>
+<v-container fluid>
+  <v-card
+    class="mx-auto"
+    max-width="344"
+    outlined
+  >
+    <v-list-item two-line>
+      <v-list-item-content>
+        <div class="overline mb-4">
+          {{ movie.title }}
+        </div>
+        <v-list-item-title class="headline mb-1">
+          {{ movie.year }}
+        </v-list-item-title>
+      </v-list-item-content>
 
-  <v-list-item>
-    <!-- <v-list-item-avatar>
-      <v-img
-        :src="movie.poster_url"
-      ></v-img>
-    </v-list-item-avatar> -->
+      <v-list-item-avatar
+        tile
+        size="100"
+        color="grey"
+      ><v-img tile :src="movie.poster_url"></v-img></v-list-item-avatar>
+    </v-list-item>
 
-    <v-list-item-content>
-      <v-list-item-title v-text="movie.title"></v-list-item-title>
-    </v-list-item-content>
-
-    <v-list-item-icon>
-      <v-icon 
-        color="deep-purple accent-4"
+    <v-card-actions>
+      <v-btn
+        outlined
+        rounded
+        text
         @click="remove"
       >
-        mdi-close
-      </v-icon>
-    </v-list-item-icon>
-  </v-list-item>
+        Remove
+      </v-btn>
+    </v-card-actions>
+  </v-card>
+</v-container>
 </template>
 
 <script>

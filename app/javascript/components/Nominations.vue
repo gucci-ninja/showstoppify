@@ -1,5 +1,6 @@
 <template>
   <v-navigation-drawer
+    class="nominations"
     absolute
     permanent
     right
@@ -11,7 +12,7 @@
 
     <v-divider></v-divider>
     
-    <v-list v-if="nominations" dense>
+    <v-list v-if="nominations.length" dense>
       <Nomination v-on:remove="$emit('remove')" v-for="movie in nominations" :key="movie.id" :movie="movie" />
     </v-list>
     <v-list v-else dense>
@@ -39,5 +40,9 @@ export default {
 
 * {
   font-family: Roboto
+}
+
+.nominations {
+  height: 100vh !important;
 }
 </style>

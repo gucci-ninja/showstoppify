@@ -1,14 +1,14 @@
 <template>
   <v-card
     class="mx-auto flex d-flex flex-column"
-    max-width="300"
+    max-width="200"
   >
     <v-img
-      height="250"
+      height="150"
       :src="movie.Poster"
     ></v-img>
 
-    <v-card-title>{{ movie.Title }}</v-card-title>
+    <v-card-title class="movie-title">{{ movie.Title }}</v-card-title>
 
     <v-card-text>
       <v-row
@@ -28,7 +28,7 @@
         color="deep-purple lighten-2"
         text
         @click="nominate"
-        :disabled="movie.nominated"
+        v-if="!movie.nominated"
       >
         Nominate
       </v-btn>
@@ -36,7 +36,7 @@
         color="deep-purple lighten-2"
         text
         @click="remove()"
-        :disabled="!movie.nominated"
+        v-if="movie.nominated"
       >
         Cancel Nomination
       </v-btn>
@@ -88,5 +88,7 @@ export default {
 </script>
 
 <style>
-
+.movie-title {
+  font-size: 18px;
+}
 </style>

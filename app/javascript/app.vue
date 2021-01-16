@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    {{ message }}
     <Nominations v-on:remove="updateNominations()" :nominations="nomination_list.movies" />
     <v-app id="inspire">
       <Banner v-if="limitReached" />
@@ -23,7 +22,7 @@
         </div>
         <v-container fluid>
           <v-row dense>
-            <v-col md="3" class="pa-3 d-flex flex-column" v-for="movie in movies" :key="movie.id" :movie="movie" >
+            <v-col md="2" class="pa-3 d-flex flex-column" v-for="movie in movies" :key="movie.id" :movie="movie" >
               <Movie 
                 v-on:nominate="updateNominations()"
                 v-on:remove="updateNominations()"
