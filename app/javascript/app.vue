@@ -20,7 +20,11 @@
             ></v-text-field>
           </v-form>
         </div>
-         <Pagination v-on:next="nextPage()" v-on:prev="prevPage()" :numPages="numPages" :page="page"/>
+        <Pagination 
+          @page="changePage"
+          :numPages="numPages"
+          :page="page"
+        />
         <v-container fluid>
           <v-row dense>
             <v-col md="2" class="pa-3 d-flex flex-column" v-for="movie in movies" :key="movie.id" :movie="movie" >
@@ -69,13 +73,23 @@ export default {
       page: 1,
     }
   },
+  created() {
+    var query = window.location.search.substring(1);
+    if (query) {
+      var pair = query.split('=')
+      if (pair[0] == 'list') {
+        this.token = pair[1];
+      }
+    }
+  },
   mounted() {
-    if (localStorage.token) {
-      this.token = localStorage.token;
-      console.log('hey')
-    } else {
-      this.token = require("crypto").randomBytes(32).toString('hex');
-      localStorage.token = this.token;
+    if (this.token === '') {
+      if (localStorage.token) {
+        this.token = localStorage.token;
+      } else {
+        this.token = require("crypto").randomBytes(32).toString('hex');
+        localStorage.token = this.token;
+      }
     }
     this.fetchNominations();
   },
@@ -106,12 +120,8 @@ export default {
       this.fetchNominations();
       this.searchMovies();
     },
-    nextPage() {
-      this.page++;
-      this.searchMovies();
-    },
-    prevPage() {
-      this.page--;
+    changePage(page) {
+      this.page = page;
       this.searchMovies();
     }
   },

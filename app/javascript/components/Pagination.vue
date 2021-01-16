@@ -1,8 +1,7 @@
 <template>
   <div class="text-center">
     <v-pagination
-      @next="$emit('next')"
-      @previous="$emit('prev')"
+      @input="nextPage"
       :value="page"
       :length="numPages"
       :total-visible="7"
@@ -16,6 +15,11 @@ export default {
     numPages: Number,
     page: Number
   },
+  methods: {
+    nextPage(page) {
+      this.$emit('page', page)
+    },
+  }
 }
 </script>
 

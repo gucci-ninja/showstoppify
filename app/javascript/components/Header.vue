@@ -20,7 +20,7 @@ export default {
   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
 .logo {
-  width: 20%;
+  width: 25%;
   display: block;
   margin-left: auto;
   margin-right: auto;
