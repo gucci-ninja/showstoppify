@@ -20,6 +20,7 @@
             ></v-text-field>
           </v-form>
         </div>
+         <Pagination v-on:next="nextPage()" v-on:prev="prevPage()" :numPages="numPages" :page="page"/>
         <v-container fluid>
           <v-row dense>
             <v-col md="2" class="pa-3 d-flex flex-column" v-for="movie in movies" :key="movie.id" :movie="movie" >
@@ -46,6 +47,7 @@ import Movie from 'components/Movie';
 import omdb from 'utils/movieApi';
 import Nominations from 'components/Nominations'
 import Banner from 'components/Banner';
+import Pagination from 'components/Pagination'
 
 export default {
   components: {
@@ -53,16 +55,18 @@ export default {
     Header,
     Nominations,
     Banner,
+    Pagination,
   },
   data: function () {
     return {
       message: process.env.OMDB_API_KEY,
-      name: '',
       movieQuery: '',
       movies: {},
       sampleMovie: { Title: 'Some Title that is really long liek super ong', Poster: 'poster', Year: '2021'},
       nomination_list: {},
-      token: ''
+      token: '',
+      numPages: 0,
+      page: 1,
     }
   },
   mounted() {
@@ -76,26 +80,19 @@ export default {
     this.fetchNominations();
   },
   methods: {
-    getName() {
-
-      axios.get('/landing/test')
-        .then((xhr) => {
-          this.name = xhr.data.name;
-
-        });
-        return this.name;
-    },
     searchMovies() {
       omdb.get('/', { 
         params: {
           s: this.movieQuery,
           type: 'movie',
-          apikey: process.env.OMDB_API_KEY
+          apikey: process.env.OMDB_API_KEY,
+          page: this.page,
         }
       }).then((res) => {
         this.movies = res.data.Search;
         this.movies.forEach((movie) => {
           movie.nominated = this.nomination_list.movies.some(e => e.title === movie.Title) })
+        this.numPages = Math.floor(res.data.totalResults/10)
         });
     },
     fetchNominations() {
@@ -103,11 +100,20 @@ export default {
       .then((res) => {
         this.nomination_list = res.data;
       });
+
     },
     updateNominations() {
       this.fetchNominations();
       this.searchMovies();
     },
+    nextPage() {
+      this.page++;
+      this.searchMovies();
+    },
+    prevPage() {
+      this.page--;
+      this.searchMovies();
+    }
   },
   computed: {
     limitReached: function() {
