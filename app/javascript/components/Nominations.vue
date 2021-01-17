@@ -12,7 +12,7 @@
 
     <v-divider></v-divider>
     
-    <v-list v-if="nominations.length" dense>
+    <v-list v-if="nominations && nominations.length" dense>
       <Nomination v-on:remove="$emit('remove')" v-for="movie in nominations" :key="movie.id" :movie="movie" />
     </v-list>
     <v-list v-else dense>

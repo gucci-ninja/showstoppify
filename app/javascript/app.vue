@@ -27,6 +27,7 @@
           :page="page"
         />
         <v-container fluid>
+          <p v-show="no_results">No results 😢</p>
           <v-row dense>
             <v-col md="2" class="pa-3 d-flex flex-column" v-for="movie in movies" :key="movie.id" :movie="movie" >
               <Movie 
@@ -74,10 +75,10 @@ export default {
       token: '',
       numPages: 0,
       page: 1,
+      no_results: false,
     }
   },
   created() {
-    console.log(window.location)
     var query = window.location.search.substring(1);
     if (query) {
       var pair = query.split('=')
@@ -99,18 +100,25 @@ export default {
   },
   methods: {
     searchMovies() {
+      this.page = 1;
+      this.no_results = false;
       omdb.get('/', { 
         params: {
           s: this.movieQuery,
           type: 'movie',
           apikey: process.env.OMDB_API_KEY,
-          page: this.page,
         }
       }).then((res) => {
         this.movies = res.data.Search;
+        if (!this.movies) { 
+          this.no_results = true;
+          this.movies = [];
+          this.numPages = 0;
+        } else {
+          this.numPages = Math.floor(res.data.totalResults/10)
+        }
         this.movies.forEach((movie) => {
           movie.nominated = this.nomination_list.movies.some(e => e.title === movie.Title) })
-        this.numPages = Math.floor(res.data.totalResults/10)
         });
     },
     fetchNominations() {
@@ -126,7 +134,24 @@ export default {
     },
     changePage(page) {
       this.page = page;
-      this.searchMovies();
+      this.no_results = false;
+      omdb.get('/', { 
+        params: {
+          s: this.movieQuery,
+          type: 'movie',
+          apikey: process.env.OMDB_API_KEY,
+          page: this.page,
+        }
+      }).then((res) => {
+        this.movies = res.data.Search;
+        if (!this.movies) { 
+          this.no_results = true;
+          this.movies = [];
+        }
+        this.movies.forEach((movie) => {
+          movie.nominated = this.nomination_list.movies.some(e => e.title === movie.Title) })
+        this.numPages = Math.floor(res.data.totalResults/10)
+        });
     },
     link() {
       return `${window.location.host}/?list=${this.token}`;
@@ -134,7 +159,7 @@ export default {
   },
   computed: {
     limitReached: function() {
-      return this.nomination_list.movies.length == 5;
+      return this.nomination_list.movies && this.nomination_list.movies.length == 5;
     }
   }
 }
